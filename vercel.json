@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/create-invoice-web", "destination": "/api/create-invoice-web" },
+    { "source": "/api/webhook-pakasir", "destination": "/api/webhook-pakasir" },
+    { "source": "/(.*)", "destination": "/public/index.html" }
+  ]
+}

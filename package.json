@@ -1,0 +1,9 @@
+{
+  "name": "alyabot-space",
+  "version": "1.0.0",
+  "description": "Alyabot Space - Sistem Sewa Bot WhatsApp",
+  "dependencies": {
+    "@vercel/kv": "^2.0.0",
+    "axios": "^1.6.0"
+  }
+}

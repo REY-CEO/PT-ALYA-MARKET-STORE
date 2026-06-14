@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alyabot Space</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+:root{
+  --bg:#000000;
+  --panel:#111111;
+  --line:#2a2a2a;
+  --accent:#ffffff;
+  --accent2:#ffffff;
+  --muted:#9a9a9a;
+}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  padding:24px;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+body::before, body::after{
+  content:"";
+  position:fixed;
+  border-radius:50%;
+  filter:blur(120px);
+  z-index:-1;
+  opacity:.35;
+  animation:float 14s ease-in-out infinite alternate;
+}
+body::before{
+  width:380px;height:380px;
+  background:var(--accent);
+  top:-120px; left:-120px;
+}
+body::after{
+  width:420px;height:420px;
+  background:var(--accent2);
+  bottom:-150px; right:-120px;
+  animation-delay:3s;
+}
+@keyframes float{
+  0%{transform:translate(0,0) scale(1);}
+  100%{transform:translate(40px,30px) scale(1.15);}
+}
+
+.container{max-width:500px;margin:auto;position:relative;z-index:1;}
+
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:35px;}
+.logo{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:26px;font-weight:700;letter-spacing:.5px;
+  display:flex;align-items:center;gap:10px;
+}
+.logo .dot{
+  width:10px;height:10px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 0 12px var(--accent);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:1;}
+  50%{transform:scale(1.4);opacity:.6;}
+}
+.menu-btn{
+  width:45px;height:45px;border-radius:14px;
+  border:1px solid var(--line);background:var(--panel);
+  color:white;font-size:20px;cursor:pointer;
+  transition:.25s;
+}
+.menu-btn:hover{border-color:var(--accent);transform:rotate(90deg);}
+
+.hero{
+  opacity:0;animation:fadeUp .7s ease forwards;
+}
+.hero .badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;color:#fff;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.06);
+  padding:6px 14px;border-radius:30px;
+  margin-bottom:16px;letter-spacing:.5px;
+  text-transform:uppercase;font-weight:600;
+}
+.hero h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:38px;line-height:1.15;margin-bottom:12px;
+  font-weight:700;
+  background:linear-gradient(135deg,#fff 40%,var(--accent) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{color:var(--muted);line-height:1.7;margin-bottom:30px;font-size:14.5px;}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.tabs{display:flex;gap:10px;margin-bottom:30px;flex-wrap:wrap;}
+.tabs button{
+  flex:1;min-width:100px;padding:14px;border-radius:16px;
+  border:1px solid var(--line);background:var(--panel);color:#cfcfd6;
+  font-size:13.5px;font-weight:500;cursor:pointer;transition:.25s;
+  position:relative;overflow:hidden;
+}
+.tabs button::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  opacity:0;transition:.25s;z-index:-1;
+}
+.tabs button:hover{border-color:rgba(255,255,255,.5);color:#fff;}
+.tabs button.active{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#000000;font-weight:700;border-color:transparent;
+  box-shadow:0 8px 24px -8px rgba(255,255,255,.35);
+}
+
+.section-title{
+  margin-bottom:18px;color:var(--muted);font-size:14px;
+  display:flex;align-items:center;gap:10px;
+  text-transform:uppercase;letter-spacing:1px;font-weight:600;
+}
+.section-title::after{
+  content:"";flex:1;height:1px;background:var(--line);
+}
+
+.products{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:30px;}
+.card{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:20px;padding:20px;cursor:pointer;
+  transition:.25s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+  animation:fadeUp .5s ease backwards;
+}
+.card::before{
+  content:"";position:absolute;top:-50%;left:-50%;
+  width:200%;height:200%;
+  background:radial-gradient(circle,rgba(255,255,255,.10),transparent 60%);
+  opacity:0;transition:.3s;
+}
+.card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(255,255,255,.35);
+  box-shadow:0 12px 30px -10px rgba(255,255,255,.25);
+}
+.card:hover::before{opacity:1;}
+.card.active{
+  background:#ffffff;
+  color:#000000;border-color:transparent;
+  box-shadow:0 14px 32px -10px rgba(255,255,255,.4);
+}
+.card h2{font-size:18px;margin-bottom:6px;font-weight:600;position:relative;z-index:1;}
+.card p{color:var(--muted);font-size:14px;position:relative;z-index:1;font-weight:600;}
+.card.active p{color:#444;}
+
+.input-box{margin-bottom:20px;opacity:0;animation:fadeUp .5s ease forwards;}
+.input-box label{display:block;margin-bottom:10px;color:var(--muted);font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;}
+.input-box input{
+  width:100%;background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;padding:17px 18px;color:white;font-size:15px;outline:none;
+  transition:.25s;
+}
+.input-box input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(255,255,255,.12);
+}
+.input-box input::placeholder{color:#54545c;}
+
+.buy-btn{
+  width:100%;border:none;padding:19px;border-radius:18px;
+  background:#ffffff;
+  color:#000000;font-size:16px;font-weight:700;cursor:pointer;
+  transition:.25s;letter-spacing:.3px;
+  box-shadow:0 10px 30px -10px rgba(255,255,255,.5);
+  position:relative;overflow:hidden;
+}
+.buy-btn::after{
+  content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(0,0,0,.15),transparent);
+  transform:skewX(-20deg);
+}
+.buy-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px -10px rgba(255,255,255,.6);}
+.buy-btn:hover::after{animation:shine .9s ease;}
+.buy-btn:active{transform:translateY(0px) scale(.98);}
+.buy-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+@keyframes shine{
+  from{left:-75%;}
+  to{left:130%;}
+}
+
+.chat-box{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;align-items:flex-end;gap:10px;z-index:50;}
+.chat-text{
+  background:var(--panel);border:1px solid var(--line);
+  padding:12px 16px;border-radius:16px;font-size:13px;
+  box-shadow:0 8px 24px -8px rgba(0,0,0,.6);
+  animation:fadeUp .6s ease forwards;
+}
+.chat-btn{
+  width:62px;height:62px;border-radius:50%;border:none;
+  background:#ffffff;
+  color:#000000;font-size:26px;cursor:pointer;
+  box-shadow:0 10px 28px -8px rgba(255,255,255,.5);
+  transition:.25s;
+}
+.chat-btn:hover{transform:scale(1.08) rotate(8deg);}
+
+.card:nth-child(1){animation-delay:.05s;}
+.card:nth-child(2){animation-delay:.1s;}
+.card:nth-child(3){animation-delay:.15s;}
+.card:nth-child(4){animation-delay:.2s;}
+.card:nth-child(5){animation-delay:.25s;}
+.card:nth-child(6){animation-delay:.3s;}
+
+@media(max-width:500px){
+  .products{grid-template-columns:1fr;}
+  .hero h1{font-size:30px;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo"><span class="dot"></span>alyabot space</div>
+        <button class="menu-btn">☰</button>
+    </div>
+
+    <div class="hero">
+        <span class="badge">⚡ Aktivasi Otomatis</span>
+        <h1>layanan sewa alyabot</h1>
+        <p>Sewa bot, perpanjang masa aktif, atau beli fitur premium secara instan. Cukup scan QRIS Pakasir, status otomatis aktif tanpa perlu konfirmasi manual ke admin.</p>
+    </div>
+
+    <div class="tabs">
+        <button class="active" onclick="switchTab('NEW')">sewa baru</button>
+        <button onclick="switchTab('RENEW')">perpanjang</button>
+        <button onclick="switchTab('PREMIUM')">fitur premium</button>
+        <button onclick="switchTab('LIST_GRUP')">list grup</button>
+    </div>
+
+    <div class="section-title" id="section-product-title">pilih paket durasi sewa baru</div>
+    <div class="products" id="products-container"></div>
+
+    <div class="input-box" id="group-link-container">
+        <label>link tautan grup whatsapp</label>
+        <input type="text" id="groupLink" placeholder="https://chat.whatsapp.com/xxx">
+    </div>
+
+    <div class="input-box" id="target-number-container">
+        <label id="target-number-label">nomor whatsapp target (pendaftar)</label>
+        <input type="text" id="targetNumber" placeholder="628xxxx">
+    </div>
+
+    <button class="buy-btn" id="submitBtn">lanjutkan pembayaran</button>
+</div>
+
+<div class="chat-box">
+    <div class="chat-text" id="chatHint" style="display:none;">Butuh bantuan? Chat admin 👋</div>
+    <button class="chat-btn" id="chatBtn" onclick="toggleChat()">💬</button>
+</div>
+
+<script>
+const BOT_PACKAGES = {
+    "NEW": [
+        { id: 1, duration: "30 Hari", label: "Rp 12.000" },
+        { id: 2, duration: "60 Hari", label: "Rp 20.000" },
+        { id: 3, duration: "90 Hari", label: "Rp 30.000" },
+        { id: 4, duration: "120 Hari", label: "Rp 40.000" },
+        { id: 5, duration: "150 Hari", label: "Rp 50.000" },
+        { id: 6, duration: "180 Hari", label: "Rp 60.000" }
+    ],
+    "RENEW": [
+        { id: 11, duration: "Perpanjang 30H", label: "Rp 12.000" },
+        { id: 12, duration: "Perpanjang 60H", label: "Rp 20.000" },
+        { id: 13, duration: "Perpanjang 90H", label: "Rp 30.000" },
+        { id: 14, duration: "Perpanjang 120H", label: "Rp 40.000" },
+        { id: 15, duration: "Perpanjang 150H", label: "Rp 50.000" },
+        { id: 16, duration: "Perpanjang 180H", label: "Rp 60.000" }
+    ],
+    "PREMIUM": [
+        { id: "new_1", duration: "Premium 1 Hari", label: "Rp 1.000" },
+        { id: "new_2", duration: "Premium 3 Hari", label: "Rp 3.000" },
+        { id: "new_3", duration: "Premium 5 Hari", label: "Rp 5.000" },
+        { id: "new_4", duration: "Premium 8 Hari", label: "Rp 8.000" },
+        { id: "new_5", duration: "Premium 1 Month", label: "Rp 10.000" },
+        { id: "new_6", duration: "Premium 2 Month", label: "Rp 20.000" },
+        { id: "new_7", duration: "Premium 3 Month", label: "Rp 30.000" },
+        { id: "new_8", duration: "Premium 4 Month", label: "Rp 40.000" },
+        { id: "new_9", duration: "Premium 5 Month", label: "Rp 50.000" },
+        { id: "new_10", duration: "Premium 6 Month", label: "Rp 60.000" },
+        { id: "new_11", duration: "Premium 7 Month", label: "Rp 70.000" },
+        { id: "new_12", duration: "Premium 8 Month", label: "Rp 80.000" },
+        { id: "new_13", duration: "Premium 9 Month", label: "Rp 90.000" },
+        { id: "new_14", duration: "Premium 10 Month", label: "Rp 100.000" }
+    ]
+};
+
+let currentType = "NEW";
+let selectedPackageId = 1;
+const API_BASE_URL = "";
+
+function renderProducts() {
+    const container = document.getElementById("products-container");
+    container.innerHTML = "";
+    if (currentType === "LIST_GRUP") return;
+
+    const list = BOT_PACKAGES[currentType];
+    list.forEach((prod, index) => {
+        const card = document.createElement("div");
+        card.className = `card ${index === 0 ? "active" : ""}`;
+        if (index === 0) selectedPackageId = prod.id;
+        card.innerHTML = `<h2>${prod.duration}</h2><p>${prod.label}</p>`;
+        card.addEventListener("click", () => {
+            document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+            card.classList.add("active");
+            selectedPackageId = prod.id;
+        });
+        container.appendChild(card);
+    });
+}
+
+function switchTab(type) {
+    currentType = type;
+    const tabsBtn = document.querySelectorAll(".tabs button");
+    tabsBtn.forEach(btn => btn.classList.remove("active"));
+    if (window.event) window.event.target.classList.add("active");
+
+    const sectionTitle = document.getElementById("section-product-title");
+    const groupContainer = document.getElementById("group-link-container");
+    const numberContainer = document.getElementById("target-number-container");
+    const numberLabel = document.getElementById("target-number-label");
+    const productsContainer = document.getElementById("products-container");
+    const submitBtn = document.getElementById("submitBtn");
+
+    productsContainer.style.display = "grid";
+    submitBtn.style.display = "block";
+    groupContainer.style.display = "none";
+    numberContainer.style.display = "block";
+
+    if (type === "NEW") {
+        sectionTitle.innerText = "pilih paket durasi sewa baru";
+        groupContainer.style.display = "block";
+        numberLabel.innerText = "nomor premium bonus (tujuan)";
+    } else if (type === "RENEW") {
+        sectionTitle.innerText = "pilih paket perpanjang masa aktif bot";
+        numberLabel.innerText = "nomor wa pendaftar / admin grup";
+    } else if (type === "PREMIUM") {
+        sectionTitle.innerText = "pilih paket aktivasi fitur premium";
+        numberLabel.innerText = "nomor wa yang ingin diaktifkan premium";
+    } else if (type === "LIST_GRUP") {
+        sectionTitle.innerText = "cek daftar list grup aktif";
+        productsContainer.style.display = "none";
+        numberLabel.innerText = "masukkan nomor whatsapp terdaftar";
+        submitBtn.style.display = "none";
+    }
+    renderProducts();
+}
+
+document.getElementById("submitBtn").addEventListener("click", async () => {
+    const groupLink = document.getElementById("groupLink").value.trim();
+    const targetNumber = document.getElementById("targetNumber").value.trim();
+
+    if (!targetNumber) { alert("Mohon masukkan nomor WhatsApp tujuan!"); return; }
+    if (currentType === "NEW" && !groupLink) { alert("Mohon masukkan tautan link grup WhatsApp Anda!"); return; }
+
+    const payload = { packageId: selectedPackageId, type: currentType, groupLink: currentType === "NEW" ? groupLink : "none", targetNumber: targetNumber };
+
+    const btn = document.getElementById("submitBtn");
+    try {
+        btn.innerText = "MEMBUAT INVOICE QRIS...";
+        btn.disabled = true;
+
+        const response = await fetch(`${API_BASE_URL}/api/create-invoice-web`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (result.status === "success") {
+            alert("Invoice QRIS Berhasil Dibuat! Anda akan dialihkan ke halaman pembayaran.");
+            window.location.href = result.qrisImageUrl;
+        } else {
+            alert("Gagal memproses transaksi: " + result.message);
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Gagal terhubung dengan sistem server backend.");
+    } finally {
+        btn.innerText = "lanjutkan pembayaran";
+        btn.disabled = false;
+    }
+});
+
+function toggleChat(){
+    const hint = document.getElementById("chatHint");
+    hint.style.display = hint.style.display === "none" ? "block" : "none";
+}
+
+renderProducts();
+</script>
+</body>
+</html>
